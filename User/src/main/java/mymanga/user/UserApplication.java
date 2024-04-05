@@ -1,5 +1,6 @@
 package mymanga.user;
 
+import mymanga.user.service.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

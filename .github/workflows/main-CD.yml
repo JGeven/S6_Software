@@ -31,6 +31,6 @@ jobs:
         image: jgeven/mymanga-user
         tags: latest
         registry: docker.io
-        dockerfile: MyManga-UserSystem/Dockerfile
+        dockerfile: User/Dockerfile
         username: ${{ secrets.DOCKERHUB_NAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}

@@ -16,4 +16,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         return user;
     }
+
+    public User registerUser(User user) {
+        return userRepository.save(user);
+    }
 }

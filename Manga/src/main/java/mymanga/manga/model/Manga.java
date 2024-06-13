@@ -1,16 +1,15 @@
 package mymanga.manga.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "Manga")
 public class Manga {
-
-    @JsonProperty("data")
-    Manga data;
-    @JsonProperty("mal_id")
-    private int mal_id;
+    @JsonProperty("author")
+    private String author;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("synopsis")
-    private String synopsis;
+    @JsonProperty("summary")
+    private String summary;
 
 }

@@ -20,10 +20,10 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<User> getUserByEmail(@RequestParam String email) {
-        User user = userService.getUserByEmail(email);
-        System.out.println(user);
-        return ResponseEntity.ok(user);
+    public ResponseEntity<User> getUserByEmail(@RequestBody User user) {
+        User dbUser = userService.getUserByEmail(user.getEmail());
+        System.out.println(dbUser);
+        return ResponseEntity.ok(dbUser);
     }
 
     @PostMapping()

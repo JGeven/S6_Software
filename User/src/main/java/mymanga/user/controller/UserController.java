@@ -1,7 +1,9 @@
 package mymanga.user.controller;
 
+
 import mymanga.user.model.User;
 import mymanga.user.service.UserService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("user")
+@RestController
 public class UserController {
 
     PasswordEncoder passwordEncoder;
@@ -17,6 +20,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
         this.passwordEncoder = new BCryptPasswordEncoder();
+
     }
 
     @GetMapping()
@@ -32,6 +36,11 @@ public class UserController {
         User dbUser = new User(user.getName(), user.getEmail(), encodedPassword);
         userService.registerUser(dbUser);
         return ResponseEntity.ok(dbUser);
+    }
+
+    @RabbitListener(queues = {"${rabbitmq.queue.name}"})
+    public void sendMessage(String mangaName) {
+        System.out.println("Consumed message, " + mangaName);
     }
 
 }

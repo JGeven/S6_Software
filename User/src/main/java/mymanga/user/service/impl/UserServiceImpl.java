@@ -3,7 +3,9 @@ package mymanga.user.service.impl;
 import mymanga.user.model.User;
 import mymanga.user.repository.UserRepository;
 import mymanga.user.service.UserService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;

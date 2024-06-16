@@ -21,8 +21,11 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-
-    - name: Build User-Backend with Maven
+        
+    - name: Build Manga-service with Maven
+      run: mvn clean install --file Manga/pom.xml
+      
+    - name: Build User-service with Maven
       run: mvn clean install --file User/pom.xml
 
     - name: Build & push Docker image
@@ -32,5 +35,15 @@ jobs:
         tags: latest
         registry: docker.io
         dockerfile: User/Dockerfile
+        username: ${{ secrets.DOCKERHUB_NAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Build & push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v5
+      with:
+        image: jgeven/mymanga-manga
+        tags: latest
+        registry: docker.io
+        dockerfile: Manga/Dockerfile
         username: ${{ secrets.DOCKERHUB_NAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}

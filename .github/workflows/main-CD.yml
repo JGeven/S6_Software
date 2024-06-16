@@ -1,10 +1,12 @@
-name: Spring boot CD flow
+name: Spring Boot CD Flow
 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches: 
+      - main
 
 jobs:
   build:
@@ -28,8 +30,8 @@ jobs:
     - name: Build User-service with Maven
       run: mvn clean install --file User/pom.xml
 
-    - name: Build & push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
+    - name: Build & push User Docker image
+      uses: mr-smithers-excellent/docker-build-push@v6
       with:
         image: jgeven/mymanga-user
         tags: latest
@@ -38,8 +40,8 @@ jobs:
         username: ${{ secrets.DOCKERHUB_NAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-    - name: Build & push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
+    - name: Build & push Manga Docker image
+      uses: mr-smithers-excellent/docker-build-push@v6
       with:
         image: jgeven/mymanga-manga
         tags: latest

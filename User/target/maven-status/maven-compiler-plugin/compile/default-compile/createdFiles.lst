@@ -1,0 +1,8 @@
+mymanga\user\repository\UserRepository.class
+mymanga\user\model\User.class
+mymanga\user\UserApplication.class
+mymanga\user\config\RabbitMQConfig.class
+mymanga\user\config\SecurityConfig.class
+mymanga\user\controller\UserController.class
+mymanga\user\service\impl\UserServiceImpl.class
+mymanga\user\service\UserService.class

@@ -1,0 +1,9 @@
+mymanga\manga\repository\MangaRepository.class
+mymanga\manga\model\Manga.class
+mymanga\manga\configuration\RabbitMQConfig.class
+mymanga\manga\service\impl\MangaServiceImpl.class
+mymanga\manga\messagebroker\RabbitMQProducer.class
+mymanga\manga\service\MangaService.class
+mymanga\manga\controller\MangaController.class
+mymanga\manga\MangaApplication.class
+mymanga\manga\configuration\AppConfig.class

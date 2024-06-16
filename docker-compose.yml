@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: rabbitmq
+    ports:
+      - 5672:5672   # amqp
+      - 5671:5671   # tls
+      - 5552:5552   # streaming
+      - 15672:15672 # http (management)
+    volumes:
+      - ./rabbitmq:/etc/rabbitmq
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "root"
+      MSSQL_PID: "Express"
+    ports:
+        - 1433:1433
+  user-service:
+    image: mymanga-user:latest
+    container_name: user
+    depends_on:
+      - mssql
+      - rabbitmq
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      RABBITMQ_QUEUE_NAME: manga-news
+      RABBITMQ_EXCHANGE_NAME: exchange
+      RABBITMQ_ROUTING_KEY: manga_routing_key
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://mssql:1433;encrypt=true;trustServerCertificate=true;
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT: "0"
+  manga-service:
+    image: mymanga-manga:latest
+    container_name: manga
+    depends_on:
+      - rabbitmq
+    ports:
+      - 8081:8081
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      RABBITMQ_QUEUE_NAME: manga-news
+      RABBITMQ_EXCHANGE_NAME: exchange
+      RABBITMQ_ROUTING_KEY: manga_routing_key
+      SPRING_DATA_MONGODB_URI: mongodb+srv://admin:admin@cluster0.59c6b49.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      SPRING_DATA_MONGODB_DATABASE: Content-database

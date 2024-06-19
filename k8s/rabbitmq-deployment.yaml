@@ -35,8 +35,9 @@ spec:
             - containerPort: 15672
               protocol: TCP
           volumeMounts:
-            - mountPath: /etc/rabbitmq
+            - mountPath: ./RabbitMQ:/etc/rabbitmq
               name: rabbitmq-cm0
+          imagePullPolicy: Never
       restartPolicy: Always
       volumes:
         - configMap:

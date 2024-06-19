@@ -8,8 +8,10 @@ metadata:
     io.kompose.service: manga-service
   name: manga-service
 spec:
+  type: LoadBalancer
   ports:
-    - name: "8081"
+    - protocol: TCP
+      name: "8081"
       port: 8081
       targetPort: 8081
   selector:

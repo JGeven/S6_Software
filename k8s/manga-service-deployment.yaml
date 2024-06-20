@@ -40,7 +40,7 @@ spec:
               value: "5672"
             - name: SPRING_RABBITMQ_USERNAME
               value: guest
-          image: mymanga-manga:latest
+          image: mymanga-manga
           name: manga
           imagePullPolicy: Never
           ports:
